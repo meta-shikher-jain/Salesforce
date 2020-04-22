@@ -1,0 +1,9 @@
+Create 2 Objects If not already exists:
+
+Loan (Amount,Name,Address,City,Manager........)
+
+Create one master object CityManager(City,Manager(LookUp of User)) (Do some dummy entries for Testing:- Jaipur
+Rahul, Ajmer Dipak)
+
+On Insert of Loan record populate the field of Manager(Loan field) according to CityManager Object (On before insert trigger for
+it).
