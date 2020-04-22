@@ -1,0 +1,16 @@
+1.)Create a Scheduler to mail to Opportunity Owner, if not modified for last 30 days.
+
+2.)Create one custom field in Account object (ContactIDs), it would have comma separated list of all
+related Contact IDs. Create a class and a static function which takes a ContactID as argument and
+check if Account’s ContactIDs field is Null or Not Null
+
+---> IF Null, then fetch all related Account Contacts and store their IDs as a comma separated list in it.
+
+---> IF Not Null, then check, Is ContactID already exist in the field value, if not then append it on that
+value.
+
+3.)Create two new fields of type Lookup in Opportunity named BillToContact(Contact) and
+Manager(Account). Create a function in class which is called on Update of Opportunities (from Trigger),
+it takes List<Opportunity> as argument and check if BillToContact field is not Blank and Manager is
+Blank then populate Manager field by related account which is linked with the contact given in
+BillToContact field..
