@@ -1,9 +1,14 @@
 // Trigger of Student custom object
-trigger StudentTrigger on Student__c (before insert,after delete) {
+trigger StudentTrigger on Student__c (after  insert, before insert, after delete, after undelete) {
     If(Trigger.IsBefore && Trigger.IsInsert){
         StudentTriggerHelper.StudentNotAllowedIfLimitExceed(Trigger.new);
     }
-    If(Trigger.IsAfter && Trigger.IsDelete){
-        StudentTriggerHelper.updateClassFieldOnStudentDelete(Trigger.old);
+    If(Trigger.IsAfter){
+        if(Trigger.IsInsert || Trigger.IsUndelete){
+        	StudentTriggerHelper.updateMyCountOnClassOnStudentAddition(Trigger.new);
+        }
+        if(Trigger.IsDelete){
+        	StudentTriggerHelper.updateMyCountOnClassOnStudentAddition(Trigger.old);
+        }
     }
 }

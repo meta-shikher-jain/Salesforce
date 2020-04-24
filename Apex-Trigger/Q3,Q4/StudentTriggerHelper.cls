@@ -7,7 +7,6 @@ public class StudentTriggerHelper {
         for(Student__c studentRecord : studentList){
             classIdInStudentListSet.add(studentRecord.Class__c);
         }
-        Boolean IsErrorOccurToAddStudent = false;
         // Class List
         List<Class__c> classOfStudentList = [SELECT MyCount__c,MaxSize__c,(SELECT Id FROM Students__r),Custom_Status__c 
                                              FROM Class__c WHERE Id IN : classIdInStudentListSet];
@@ -25,38 +24,23 @@ public class StudentTriggerHelper {
             // When if student count gets more than max size of class than show error
             // else increase the student count in class
             if(classIdToStudentCountMap.get(stud.Class__c) >= classIdToMaxStudentSizeMap.get(stud.Class__c)){
-                IsErrorOccurToAddStudent = true;
                 stud.addError(
                     'Cannot add student in class, class size is full.');    
             } else	{
                 classIdToStudentCountMap.put(stud.Class__c,classIdToStudentCountMap.get(stud.Class__c) + 1);
             }
         }
-// Condition to update the MyCount field in Class if there is not any error occurs to add students
-        if(!IsErrorOccurToAddStudent){
-            for(Class__c classRecord : classOfStudentList){
-                classRecord.MyCount__c = classIdToStudentCountMap.get(classRecord.Id);
-            }
-            update classOfStudentList;
-        }
     }
-    // Method to update the MyCount field of Class when the Student record is deleted
-    public static void updateClassFieldOnStudentDelete(List<Student__c> studentList){
-        if(!studentList.IsEmpty()){
-            // Set of Class id which are present in students which are to be remains after deleted
-            Set<Id> classIdInStudentListSet = new Set<Id>();
-            for(Student__c studentRecord : studentList){
-                classIdInStudentListSet.add(studentRecord.Class__c);
-            }
-            // Map of class id with Deleted students class
-            Map<Id,Class__c> classOfDeletedStudentMap = new Map<Id,Class__c>([SELECT MyCount__c FROM Class__c 
-                                                                              WHERE Id IN : classIdInStudentListSet]);
-            for(Student__c studentRecord : studentList){
-                Class__c classRecord = classOfDeletedStudentMap.get(studentRecord.Class__c);
-                classRecord.MyCount__c -= 1;
-                classOfDeletedStudentMap.put(studentRecord.Class__c,classRecord);
-            }
-            update classOfDeletedStudentMap.values();
+    // Method to update the MyCount field of Class when the Student record is insert,delete,undelete
+    public static void updateMyCountOnClassOnStudentAddition(List<Student__c> studentList){
+        Set<Id> studClassId = new Set<Id>();
+        for(Student__c stud : studentList){
+            studClassId.add(stud.Class__c);
         }
+        List<Class__c> classDataList = [SELECT MyCount__c,(SELECT Id FROM Students__r) FROM Class__c WHERE Id IN : studClassId];
+        for(Class__c classRecord : classDataList){
+            classRecord.MyCount__c = classRecord.Students__r.size();
+        }
+        update classDataList;
     }
 }
