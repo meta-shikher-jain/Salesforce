@@ -1,0 +1,15 @@
+1.) Not Allow any teacher to insert/update if that teacher is teaching Hindi (Use subject multi select
+picklist).
+
+2.) Not allow any class to delete if there are more than one Female students.
+
+3.) Not allow insert student if class already reached MaxLimit.(Without using MyConnt field).
+
+4.) When insert/update any student’s in class then update MyCount Accordingly(Use MyCount as a
+number field).
+
+5.) In Opportunity, If the stage is changed from another value to CLOSED_WON or CLOSED_LOST,
+populates the Close Date field with Today().
+
+6.) Create a new PickList “Custom Status” in Class object.(New,Open,Close,Reset) values. When this
+field changed and value is “Reset” now then delete all associated students with related Class.
