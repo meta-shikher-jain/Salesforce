@@ -1,0 +1,65 @@
+SOQL
+
+1.) Write SOQL Select all student Name,Dob,Sex where LastName starts with “S” ?
+
+SELECT First_Name__c,DOB__c,Sex__c FROM Student__c WHERE LastName__c LIKE 'S%'
+
+2.) Select All students where ClassName starts with “C” ? 
+
+SELECT Class__r.Name FROM Student__c WHERE Class__r.Name LIKE 'C%'
+
+3.) Select all Student and ClassName ?
+
+SELECT Class__r.Name,First_Name__c FROM Student__c
+
+4.) Select all Classes with students in every class as subquery.
+
+SELECT Name ,(SELECT First_Name__c FROM Students__r ) FROM Class__c
+
+5.) Select all students where class teacher name starts with “K” ?
+
+SELECT First_Name__c FROM Student__c WHERE  Class__r.ClassTeacher__r.Name LIKE 'K%'
+
+6.) SELECT First_Name__c FROM Student__c WHERE Calendar_Year(DOB__c) > 2000 ?
+
+SELECT First_Name__c FROM Student__c WHERE Calendar_Year(DOB__c) > 2000
+
+7.) All Leads Where ModifiedDate in current month ?
+
+SELECT Name FROM Lead WHERE LastModifiedDate = THIS_MONTH
+
+8.) All Classes with Students as subquery where student Name Starts with “S”  ?
+
+SELECT Name ,(SELECT First_Name__c FROM Students__r WHERE  First_Name__c LIKE 'S%') FROM Class__c
+
+9.) All Teachers who have Hindi and English both subjects ?
+
+// When we take subject field  in junction object (Teach__c) as picklist not a multiselect picklist than this query is used
+
+SELECT Id,Name FROM Contact WHERE Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'Hindi') AND Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'English')
+
+10.) All students who have hindi or maths ?
+
+// When we take subject field  in junction object (Teach__c) as picklist not a multiselect picklist than this query is used
+
+
+SELECT First_Name__c FROM Student__c WHERE Class__c IN (SELECT Class__c FROM Teach__c WHERE Subject__c = 'Hindi' OR Subject__c = 'Math')
+ 
+11.) Select no. of students per class ?
+ 
+SELECT Name, NumberOfStudents__c FROM Class__c
+
+12.) Monthly Birthday Count of students with sorting ?
+
+SELECT Count(Id),Calendar_Month(DOB__c) FROM Student__c GROUP BY CALENDAR_MONTH(DOB__c) ORDER BY Count(Id) 
+
+SOSL
+
+1.)  Find all persons with name as “Joe” i.e (Teachers or Students) ?
+
+FIND {Joe} IN Name Fields RETURNING Student__c(First_Name__c),Contact(Name)
+
+2.) Find all Male persons with name as “Joe” i.e (Teachers or Students) ?
+
+FIND {Joe} IN Name Fields RETURNING Student__c (First_Name__c, Sex__c WHERE Sex__c = 'Male'), Contact(Name)
+
