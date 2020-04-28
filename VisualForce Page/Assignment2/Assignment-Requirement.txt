@@ -1,0 +1,8 @@
+Create a Page Where some
+Filters in BilingCity, BillingState,
+BillingCountry of Account and
+Click on Search button for
+displaying first 10 Accounts at a
+Time and Provide Pagination for
+(Previous Next and First and
+Last)

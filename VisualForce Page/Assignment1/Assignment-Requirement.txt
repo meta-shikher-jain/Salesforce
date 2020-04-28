@@ -1,0 +1,2 @@
+Create visualforce pages for Class and Student object and override
+standard “New” and “Edit” buttons.
