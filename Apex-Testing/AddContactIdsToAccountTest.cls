@@ -1,7 +1,7 @@
 @IsTest
 public class AddContactIdsToAccountTest {
-    // Test method for testing the contactIds field in account object
-    static testmethod void testContactIdInAccount(){
+    // Test method 1 for testing the contactIds field in account object
+    @isTest static void test1ContactIdInAccount(){
         // Given
         List<Contact> contList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,150);
         // When
@@ -22,16 +22,31 @@ public class AddContactIdsToAccountTest {
         contIdInAccountSet.addAll(contIdInAccountList);
         // Then
         System.assertEquals(insertedContId,contIdInAccountSet);
-        contIdInAccountList.clear();
-        contIdInAccountSet.clear();
+    }
+    // Test method 2 for testing the contactIds field in account object	
+    @isTest static void test2ContactIdInAccount(){
+        // Given
+        List<Contact> contList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,150);
+        Test.startTest();
+        // Test when the ContactIds field in account object is empty 
+        AddContactIdsToAccount.ContactIdInAccount(contList[0].Id);
+        Test.stopTest(); 
+        // Set of inserted contact id
+        Set<Id> insertedContId = new Set<Id>();
+        for(Contact cont : contList){
+            insertedContId.add(cont.Id);
+        }
         // Testing the condition when ContactIds field in account object is not empty
         Contact con = new Contact(FirstName = 'Test ', LastName = 'Data ', AccountId =  contList[0].AccountId);
         insert con;
         insertedContId.add(con.id);
+        // When
         AddContactIdsToAccount.ContactIdInAccount(con.Id);
         Account accOutputData2 = [SELECT ContactIds__c FROM Account WHERE Id = : contList[0].AccountId];
-        contIdInAccountList = accOutputData2.ContactIds__c.split(',');
+        List<Id> contIdInAccountList = accOutputData2.ContactIds__c.split(',');
+        Set<Id> contIdInAccountSet = new Set<Id>();
         contIdInAccountSet.addAll(contIdInAccountList);
+        // Then
         System.assertEquals(contIdInAccountSet,insertedContId);
     }
 }

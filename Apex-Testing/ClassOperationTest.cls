@@ -33,16 +33,22 @@ public class ClassOperationTest {
             system.assertEquals(output.get(key).size(),2);
         }
     }
-    @IsTest static void numberOfWorkingDaysTest(){
+    @IsTest static void numberOfWorkingDaysTest1(){
         // Given
         Date date1 = Date.newInstance(2020, 04, 17);
         Date date2 = Date.newInstance(2020, 04, 24);
-        Date date3 = Date.newInstance(2020, 04, 25);
         // When
         Integer workDays1 = ClassOperation.numberOfWorkingDays(date1, date2);
         // Then
         system.assertEquals(workDays1,4);
+    }
+     @IsTest static void numberOfWorkingDaysTest2(){
+        // Given
+        Date date1 = Date.newInstance(2020, 04, 17);
+        Date date3 = Date.newInstance(2020, 04, 25);
+        // When
         Integer workDays2 = ClassOperation.numberOfWorkingDays(date1, date3);
+        // Then
         system.assertEquals(workDays2,5);
     }
 }
