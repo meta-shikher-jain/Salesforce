@@ -10,7 +10,7 @@ public class SendMailToOpportunityOwnerTest {
         }
         insert oppRecords;
     }
-    static testmethod void testSchedulable(){
+    @IsTest  static void testSchedulable(){
         String CRON_EXP = '0 2 23 24 4 ? 2020';
         Test.startTest();
         // When

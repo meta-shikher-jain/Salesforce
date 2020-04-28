@@ -2,7 +2,7 @@
 public class OpportunityTriggerTest {
     // Test class for testing the , updation of manager field according to the account 
     // related to contact in Bill_to_manager field
-    static testmethod void opportunityUpdateManagerField(){
+    @IsTest static void opportunityUpdateManagerField(){
         // Given
         List<Contact> contactList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,1);
         Opportunity opp = new Opportunity(Name='Opportunity Test',StageName='Prospecting',CloseDate=System.today().addMonths(1));
@@ -18,7 +18,7 @@ public class OpportunityTriggerTest {
     }
     // Test Class for updating the opportunity close date if the stage changed 
     // from any other stage to Closed Won or Closed Lost
-    static testmethod void opportunityUpdateCloseDate(){
+    @IsTest static void opportunityUpdateCloseDate(){
         // Given
         List<Contact> contactList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,1);
         Opportunity opp = new Opportunity(Name='Opportunity Test',StageName='Prospecting',CloseDate=System.today().addMonths(1));

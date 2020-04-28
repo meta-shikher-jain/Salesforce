@@ -1,6 +1,6 @@
 @IsTest
 public class ListOfSobjectsTest {
-    static testmethod void showAllSobjectsTest(){
+    @IsTest static void showAllSobjectsTest(){
         // Given
         List<String> ourTestObjects = new List<String>{'Account','Contact'};
         // When
