@@ -1,0 +1,20 @@
+Exercise - As you have created two new fields (BillToContact and Manager) on Opportunity
+previously. Now requirement is select BillToContact using Custom LookUp (This lookup displays list
+of Contacts related to that Manager on Opportunity).
+
+Requirements:
+
+Create a new formula field (Select Bill To Contact) and Link to a new visualforce page
+(Hint :: HyperLink).
+
+Visualforce page showing list of Contacts which is related to that Manager with additional
+radio Button.
+
+Page Contains three buttons (Save ,Clear & Cancel).
+
+On click of Save selected Contact store in BillToContact field and return back to
+Opportunity page
+
+On click of Clear set BillToContact Field Null and return back to Opportunity
+
+On click of Cancel do nothing and return back to Opportunity
