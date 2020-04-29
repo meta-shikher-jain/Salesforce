@@ -10,8 +10,8 @@ public class SendMailToOpportunityOwnerTest {
         }
         insert oppRecords;
     }
-    @IsTest  static void testSchedulable(){
-        String CRON_EXP = '0 2 23 24 4 ? 2020';
+    @IsTest static void testSchedulable(){
+        String CRON_EXP = '0 2 23 27 4 ? 2020';
         Test.startTest();
         // When
         System.schedule('ScheduledApexTest', CRON_EXP,new SendMailToOpportunityOwnerScheduler());   

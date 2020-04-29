@@ -1,6 +1,6 @@
 @IsTest
 public class AddContactIdsToAccountTest {
-    // Test method 1 for testing the contactIds field in account object
+    // Test method for testing the contactIds field in account object
     @isTest static void test1ContactIdInAccount(){
         // Given
         List<Contact> contList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,150);
@@ -23,19 +23,20 @@ public class AddContactIdsToAccountTest {
         // Then
         System.assertEquals(insertedContId,contIdInAccountSet);
     }
-    // Test method 2 for testing the contactIds field in account object	
+    // Test method 2 for testing the contactIds field in account object
     @isTest static void test2ContactIdInAccount(){
         // Given
         List<Contact> contList = TestFactoryDataForAccountAndContact.createAccountsWithContacts(1,150);
-        Test.startTest();
-        // Test when the ContactIds field in account object is empty 
-        AddContactIdsToAccount.ContactIdInAccount(contList[0].Id);
-        Test.stopTest(); 
+        String contactIdString = '';
+        Account accOutputData1 = [SELECT ContactIds__c FROM Account WHERE Id = : contList[0].AccountId];
         // Set of inserted contact id
         Set<Id> insertedContId = new Set<Id>();
         for(Contact cont : contList){
             insertedContId.add(cont.Id);
+            contactIdString += cont.Id + ',';
         }
+        accOutputData1.ContactIds__c = contactIdString.removeEnd(',');
+        update accOutputData1;
         // Testing the condition when ContactIds field in account object is not empty
         Contact con = new Contact(FirstName = 'Test ', LastName = 'Data ', AccountId =  contList[0].AccountId);
         insert con;

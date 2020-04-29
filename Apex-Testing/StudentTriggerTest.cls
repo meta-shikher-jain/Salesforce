@@ -35,8 +35,8 @@ public class StudentTriggerTest {
         // Then
         System.assertEquals(4, [SELECT Count() From Student__c WHERE Class__c = : classRecord.Id]);
     }
-    // Test method to test the Mycount Field on Class according to student insert,delete and undelete
-    @IsTest static void testupdateMyCountOnClassOnStudentAddition(){
+    // Test method to test the Mycount Field on Class according to student insert
+    @IsTest static void InserttestupdateMyCountOnClassOnStudentAddition(){
         // Given
         Class__c classRecord = new Class__c(Board__c = 'Bihar',Fee__c = 1000, MaxSize__c = 5);
         insert classRecord;
@@ -51,12 +51,40 @@ public class StudentTriggerTest {
         // Then
         // Test the Mycount field in Class when insert of student
         System.assertEquals(4, outputClassDataOnInsert.MyCount__c);
+    }
+    // Test method to test the Mycount Field on Class according to student delete 
+    @IsTest static void DeletetestupdateMyCountOnClassOnStudentAddition(){
+        // Given
+        Class__c classRecord = new Class__c(Board__c = 'Bihar',Fee__c = 1000, MaxSize__c = 5);
+        insert classRecord;
+        List<Student__c> studentList = new List<Student__c>();
+        for(Integer i = 0; i < 4; i++){
+            Student__c studentData = new Student__c(First_Name__c = 'Test Name '+ i, LastName__c = 'LastName' + i, Sex__c = 'Female',Class__c = classRecord.Id);
+            studentList.add(studentData);
+        }
+        insert studentList;
+        Class__c outputClassDataOnInsert = [SELECT MyCount__c From Class__c WHERE Id = : classRecord.Id];
         // When
         delete studentList[0];
         Class__c outputClassDataOnDelete = [SELECT MyCount__c From Class__c WHERE Id = : classRecord.Id];
         // Then
         // Test the Mycount field in Class when delete of student
         System.assertEquals(3, outputClassDataOnDelete.MyCount__c);
+    }
+    // Test method to test the Mycount Field on Class according to student undelete
+    @IsTest static void UndeletetestupdateMyCountOnClassOnStudentAddition(){
+        // Given
+        Class__c classRecord = new Class__c(Board__c = 'Bihar',Fee__c = 1000, MaxSize__c = 5);
+        insert classRecord;
+        List<Student__c> studentList = new List<Student__c>();
+        for(Integer i = 0; i < 4; i++){
+            Student__c studentData = new Student__c(First_Name__c = 'Test Name '+ i, LastName__c = 'LastName' + i, Sex__c = 'Female',Class__c = classRecord.Id);
+            studentList.add(studentData);
+        }
+        insert studentList;
+        Class__c outputClassDataOnInsert = [SELECT MyCount__c From Class__c WHERE Id = : classRecord.Id];
+        delete studentList[0];
+        Class__c outputClassDataOnDelete = [SELECT MyCount__c From Class__c WHERE Id = : classRecord.Id];
         // When
         undelete studentList[0];
         Class__c outputClassDataOnUndelete = [SELECT MyCount__c From Class__c WHERE Id = : classRecord.Id];
